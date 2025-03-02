@@ -7,5 +7,5 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "Site inaccessible: {{ $labels.instance }}"
-          description: "Le site {{ $labels.instance }} est inaccessible depuis 1 minute."
+          summary: "Service inaccessible: {{ $labels.instance }}"
+          description: "Le service {{ $labels.instance }} est inaccessible depuis 1 minute."

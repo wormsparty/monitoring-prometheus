@@ -12,15 +12,15 @@ rule_files:
   - "rules.yml"
 
 scrape_configs:
-  - job_name: blackbox
+  - job_name: site-monitoring
     metrics_path: /probe
     params:
       module: [http_2xx]  # Vérifie que le site répond avec un code 2xx
     static_configs:
       - targets:
-          - https://google.ch
-          - https://foo.bar
-          - https://lausanne.ch
+        # TODO: Besoin de changer les noms des conteneurs foo_bar -> foo-bar
+        - http://localhost:8020/
+        - http://localhost:8020/api/health/
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

@@ -22,7 +22,7 @@ receivers:
           {{ range .Alerts }}
           <p>
           <b>[{{ .Status | toUpper }}] {{ .Labels.alertname }}</b><br>
-          Site: {{ .Labels.instance }}<br>
+          Service: {{ .Labels.instance }}<br>
           Début: {{ .StartsAt }}<br>
           {{ if .EndsAt }}
           Fin: {{ .EndsAt }}<br>
