@@ -1,0 +1,32 @@
+global:
+  resolve_timeout: 5m
+  smtp_from: 'alertmanager@exemple.com'  # Adresse expéditeur
+  smtp_smarthost: 'smtp.exemple.com:587' # Serveur SMTP et port
+  smtp_auth_username: 'your_email@exemple.com'
+  smtp_auth_password: 'your_password'
+  smtp_require_tls: true
+
+route:
+  group_by: ['instance']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'email-notifications'
+
+receivers:
+  - name: 'email-notifications'
+    email_configs:
+      - to: 'your_email@exemple.com' # Destinataire des alertes
+        send_resolved: true
+        html: |
+          {{ range .Alerts }}
+          <p>
+          <b>[{{ .Status | toUpper }}] {{ .Labels.alertname }}</b><br>
+          Site: {{ .Labels.instance }}<br>
+          Début: {{ .StartsAt }}<br>
+          {{ if .EndsAt }}
+          Fin: {{ .EndsAt }}<br>
+          {{ end }}
+          Description: {{ .Annotations.description }}
+          </p>
+          {{ end }}

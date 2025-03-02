@@ -1,0 +1,11 @@
+groups:
+  - name: site-monitoring
+    rules:
+      - alert: SiteDown
+        expr: probe_success == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Site inaccessible: {{ $labels.instance }}"
+          description: "Le site {{ $labels.instance }} est inaccessible depuis 1 minute."
